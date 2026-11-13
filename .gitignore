@@ -1,0 +1,19 @@
+# Local build and test artifacts
+preview/*.exe
+tests/*.exe
+*.pdb
+*.user
+*.suo
+
+# IDE state
+.vs/
+.idea/
+
+# Local capture files (UI previews ui-*.png stay in the repo)
+preview/window-*.png
+preview/crop-*.png
+preview/desktop.png
+
+# OS metadata
+Thumbs.db
+desktop.ini

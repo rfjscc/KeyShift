@@ -1,0 +1,76 @@
+KeyShift · 键盘布局切换器 v1.0
+================================
+
+一个绿色、免安装的小工具，用于在美式键盘（KBDUS.DLL）和英式键盘（KBDUK.DLL）之间切换 Microsoft 拼音使用的“简体中文 - 美式键盘”布局（注册表 ID 00000804）。
+
+
+使用方法
+--------
+1. 双击 KeyShift.exe。
+2. 点击右侧的“立即切换为英式键盘 / 美式键盘”。
+3. Windows 弹出 UAC 时选择“是”。
+4. 切换完成后，注销或重启 Windows 使新布局生效。
+
+如果程序以管理员身份运行，点击后会直接切换，不再询问 UAC。
+程序不会自动注销或重启电脑。
+
+
+它修改什么
+----------
+位置：
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Keyboard Layouts\00000804
+
+Layout File：
+  KBDUS.DLL  <->  KBDUK.DLL
+
+Layout Text：
+  识别到 US/UK Keyboard 或 美式/英式键盘 时同步更新；
+  自定义名称保持原样。
+
+不会修改 Layout Display Name，不会替换系统 DLL，不会安装服务或驱动，
+不会创建开机启动项，也不会联网。
+
+
+恢复默认
+--------
+在程序中点击“恢复系统默认”，再点一次确认即可写回 KBDUS.DLL。
+如果当前已经是美式布局，该链接会置灰。
+
+也可手动在注册表中把：
+  Layout File = KBDUS.DLL
+  Layout Text = Chinese (Simplified) - US Keyboard
+
+
+为什么需要重启
+--------------
+Windows 在登录时加载并缓存键盘布局 DLL。写入注册表后，请注销并重新
+登录，或重启 Windows，新布局才会被加载。
+
+
+权限与安全
+----------
+- 主窗口以普通权限启动，只在点击切换时申请管理员权限。
+- 程序未做商业代码签名，UAC 中可能显示“未知发布者”。
+- 源码位于项目 src 文件夹，可自行检查并重新编译。
+- 如果杀毒软件提示风险，这是因为它会按设计修改系统注册表；程序不联网、
+  不释放额外文件。
+- 写入中途失败时，程序会尝试回滚原值。
+
+
+系统要求
+--------
+Windows 10 / 11，64 位优先。
+界面使用 .NET Framework 4.8（Windows 10 1903+ 和 Windows 11 已内置）。
+
+
+开发者构建
+----------
+在项目根目录运行：
+  powershell -NoProfile -ExecutionPolicy Bypass -File .\build.ps1
+输出：
+  dist\KeyShift.exe
+
+
+版本
+----
+1.0 · 2026
